@@ -20,7 +20,7 @@
           <el-menu-item index="1-2" route='/productList'>商品列表</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="3" route='/orderList'>
         <i class="el-icon-menu"></i>
         <span slot="title">订单管理</span>
       </el-menu-item>

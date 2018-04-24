@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Classify from '@/components/product/classifyList'
 import ProductList from '@/components/product/productList'
+import orderList from '@/components/order/orderList'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/productList',
       name: 'productList',
       component: ProductList
+    },
+    {
+      path: '/orderList',
+      name: 'orderList',
+      component: orderList
     }
   ]
 })

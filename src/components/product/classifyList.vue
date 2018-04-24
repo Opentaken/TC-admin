@@ -29,6 +29,7 @@
       <el-button type="primary" plain>新增产品</el-button>
     </el-col>
   </el-row>
+
   <!-- 分类列表表单 -->
   <el-table
     :data="tableData5"
@@ -83,11 +84,11 @@
         <el-button
           size="mini"
           type="Success"
-          @click="addFood(scope.$index, scope.row)">查看所属商品</el-button>
+          @click="check(scope.$index, scope.row)">查看所属商品</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="delet(scope.$index)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -102,8 +103,8 @@
       :total="100">
     </el-pagination>
   </div>
-  <!-- 编辑分类 -->
 
+  <!-- 编辑分类 -->
   <el-dialog title="编辑分类" :visible.sync="dialogFormVisible">
     <el-form :model="form">
       <el-form-item label="分类名称" :label-width="formLabelWidth">
@@ -115,9 +116,21 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      <el-button type="primary" @click="delet(scope.$index, scope.row)">确 定</el-button>
     </div>
   </el-dialog>
+  <!-- 删除确认框 -->
+  <el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="deleteEnt">确 定</el-button>
+  </span>
+</el-dialog>
 
 </div>
 </template>
@@ -128,18 +141,18 @@ export default {
     return {
       tableData5: [{// 表单数据
         id: '12987122',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
+        name: '好滋好味11鸡蛋仔',
+        category: '江浙11小吃、小吃零食',
         desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
+        address: '上海市11普陀区真北路',
+        shop: '王小虎夫11妻店',
         shopId: '10333'
       }, {
         id: '12987123',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
+        name: '好滋好22味鸡蛋仔',
+        category: '江浙22小吃、小吃零食',
+        desc: '荷兰优质22淡奶，奶香浓而不腻',
+        address: '上海22市普陀区真北路',
         shop: '王小虎夫妻店',
         shopId: '10333'
       }, {
@@ -211,23 +224,35 @@ export default {
         name: '',
         region: ''
       },
-      dialogFormVisible: false, // 控制弹窗是否显示
+      dialogFormVisible: false, // 控制编辑分类框是否显示
+      dialogVisible: false, // 控制删除确认框是否显示
       formLabelWidth: '120px', // 弹窗label宽度
       labelPosition: 'right', // 表单label对齐方式
       formLabelAlign: {// 查询框的数据
         name: '',
         date1: '',
         date2: ''
-      }
+      },
+      deleIndex: '' // 用于保存点击删除时记录删除的数据索引
     }
   },
   methods: {
-    addFood: function (a, b) { // 表格---查看商品对应方法
-      console.log(a)
-      console.log(b)
+    check: function (val, classify) { // 表格---查看商品对应方法
+      this.$router.push({name: 'productList', params: {billId: classify}})
+    },
+    delet: function (val) { // 点击删除触发按钮显示并记录数据索引值
+      this.deleIndex = val
+      this.dialogVisible = true
+    },
+    deleteEnt: function () { // 点击确定触发的方法
+      this.tableData5.splice(this.deleIndex, 1)
+      this.dialogVisible = false
     },
     handleCurrentChange (val) { // 分页切换页码触发的方法
       console.log(`当前页: ${val}`)
+    },
+    handleClose (done) {
+      done()
     }
   }
 
