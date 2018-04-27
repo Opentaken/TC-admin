@@ -43,54 +43,94 @@
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="分类名称">
+          <el-form-item label="产品编号">
             <span>{{ props.row.name }}</span>
           </el-form-item>
-          <el-form-item label="分类 ID">
+          <el-form-item label="产品名称">
             <span>{{ props.row.id }}</span>
           </el-form-item>
-          <el-form-item label="分类产品">
+          <el-form-item label="产品状态">
             <span>{{ props.row.shopId }}</span>
+          </el-form-item>
+          <el-form-item label="产品价格">
+            <span>{{ props.row.category }}</span>
           </el-form-item>
           <el-form-item label="产品销量">
             <span>{{ props.row.category }}</span>
           </el-form-item>
-          <el-form-item label="分类描述">
+          <el-form-item label="产品描述">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="创建时间">
+            <span>{{ props.row.desc }}</span>
+          </el-form-item>
+          <el-form-item label="修改时间">
             <span>{{ props.row.desc }}</span>
           </el-form-item>
         </el-form>
       </template>
     </el-table-column>
     <el-table-column
-      label="分类 ID"
+      label="产品编号"
       prop="id"
-      align="center"
-      width="260">
+      align="center">
     </el-table-column>
     <el-table-column
-      label="分类名称"
+      label="产品名称"
       prop="name"
-      align="center"
-      width="260">
+      align="center">
     </el-table-column>
     <el-table-column
-      label="分类描述"
+      label="产品价格"
       prop="desc"
-      align="center"
-      width="350">
+      align="center">
     </el-table-column>
-    <el-table-column width="100"></el-table-column>
+    <el-table-column
+      label="产品存量"
+      prop="desc"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="产品销量"
+      prop="desc"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="产品描述"
+      prop="desc"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="创建时间"
+      prop="desc"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="修改时间"
+      prop="desc"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="所属分类"
+      prop="desc"
+      align="center">
+    </el-table-column>
     <el-table-column
       label="操作"
-      align="center">
+      align="center"
+      width="290">
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="dialogFormVisible = true">编辑</el-button>
+          @click="dialogFormVisible = true">详情</el-button>
         <el-button
           size="mini"
           type="Success"
-          @click="addFood(scope.$index, scope.row)">查看所属商品</el-button>
+          @click="addFood(scope.$index, scope.row)" v-if="isshow">上架</el-button>
+          <el-button
+          size="mini"
+          type="Success"
+          @click="addFood(scope.$index, scope.row)">下架</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -98,7 +138,6 @@
       </template>
     </el-table-column>
   </el-table>
-
   <!-- 分页 -->
   <div class="block">
     <el-pagination
@@ -111,14 +150,36 @@
   </div>
   <!-- 编辑分类 -->
 
-  <el-dialog title="编辑分类" :visible.sync="dialogFormVisible">
+  <el-dialog title="编辑产品" :visible.sync="dialogFormVisible">
     <el-form :model="form">
-      <el-form-item label="分类名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="分类描述" :label-width="formLabelWidth">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="产品名称" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="产品价格" :label-width="formLabelWidth">
+            <el-input v-model="form.name" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="产品存量" :label-width="formLabelWidth">
+            <el-input v-model="form.region" auto-complete="off"></el-input>
+        </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-checkbox v-model="checked" label="备选项"></el-checkbox>
+        </el-col>
+      </el-row>
+      
+      <el-form-item label="所属分类" :label-width="formLabelWidth">
         <el-input v-model="form.region" auto-complete="off"></el-input>
       </el-form-item>
+      <el-form-item label="产品描述" :label-width="formLabelWidth">
+        <el-input :rows="3" v-model="form.region" type="textarea" auto-complete="off"></el-input>
+      </el-form-item>
+
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -226,7 +287,9 @@ export default {
         date1: '',
         date2: ''
       },
-      activeName: 'all'
+      activeName: 'all',
+      isshow: false,
+      checked: false
     }
   },
   methods: {
