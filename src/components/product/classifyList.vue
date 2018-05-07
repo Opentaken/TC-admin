@@ -32,44 +32,44 @@
 
   <!-- 分类列表表单 -->
   <el-table
-    :data="tableData5"
+    :data="tabdata"
     style="width: 100%">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="分类名称">
-            <span>{{ props.row.name }}</span>
+            <span>{{ props.row.categoryName }}</span>
           </el-form-item>
           <el-form-item label="分类 ID">
-            <span>{{ props.row.id }}</span>
+            <span>{{ props.row.categoryId }}</span>
           </el-form-item>
           <el-form-item label="分类产品">
-            <span>{{ props.row.shopId }}</span>
+            <span>{{ props.row.product_name }}</span>
           </el-form-item>
           <el-form-item label="产品销量">
-            <span>{{ props.row.category }}</span>
+            <span>{{ props.row.sales_volume }}</span>
           </el-form-item>
           <el-form-item label="分类描述">
-            <span>{{ props.row.desc }}</span>
+            <span>{{ props.row.synopsis }}</span>
           </el-form-item>
         </el-form>
       </template>
     </el-table-column>
     <el-table-column
       label="分类 ID"
-      prop="id"
+      prop="categoryId"
       align="center"
       width="260">
     </el-table-column>
     <el-table-column
       label="分类名称"
-      prop="name"
+      prop="categoryName"
       align="center"
       width="260">
     </el-table-column>
     <el-table-column
       label="分类描述"
-      prop="desc"
+      prop="synopsis"
       align="center"
       width="350">
     </el-table-column>
@@ -80,7 +80,7 @@
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="dialogFormVisible = true">编辑</el-button>
+          @click="bianji(scope.$index, scope.row)">编辑</el-button>
         <el-button
           size="mini"
           type="Success"
@@ -106,17 +106,17 @@
 
   <!-- 编辑分类 -->
   <el-dialog title="编辑分类" :visible.sync="dialogFormVisible">
-    <el-form :model="form">
+    <el-form :model="dialogForm">
       <el-form-item label="分类名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" auto-complete="off"></el-input>
+        <el-input v-model="dialogForm.name" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="分类描述" :label-width="formLabelWidth">
-        <el-input v-model="form.region" auto-complete="off"></el-input>
+        <el-input v-model="dialogForm.synopsis" auto-complete="off"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="delet(scope.$index, scope.row)">确 定</el-button>
+      <el-button type="primary" @click="updata()">确 定</el-button>
     </div>
   </el-dialog>
   <!-- 删除确认框 -->
@@ -125,12 +125,12 @@
   :visible.sync="dialogVisible"
   width="30%"
   :before-close="handleClose">
-  <span>这是一段信息</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="deleteEnt">确 定</el-button>
-  </span>
-</el-dialog>
+    <span>这是一段信息</span>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="deleteEnt">确 定</el-button>
+    </span>
+  </el-dialog>
 
 </div>
 </template>
@@ -139,91 +139,7 @@
 export default {
   data () {
     return {
-      tableData5: [{// 表单数据
-        id: '12987122',
-        name: '好滋好味11鸡蛋仔',
-        category: '江浙11小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市11普陀区真北路',
-        shop: '王小虎夫11妻店',
-        shopId: '10333'
-      }, {
-        id: '12987123',
-        name: '好滋好22味鸡蛋仔',
-        category: '江浙22小吃、小吃零食',
-        desc: '荷兰优质22淡奶，奶香浓而不腻',
-        address: '上海22市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987125',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }],
-      form: {// 表单操作--编辑数据
-        name: '',
-        region: ''
-      },
+      tabdata: [],
       dialogFormVisible: false, // 控制编辑分类框是否显示
       dialogVisible: false, // 控制删除确认框是否显示
       formLabelWidth: '120px', // 弹窗label宽度
@@ -233,7 +149,13 @@ export default {
         date1: '',
         date2: ''
       },
-      deleIndex: '' // 用于保存点击删除时记录删除的数据索引
+      deleIndex: '', // 用于保存点击删除时记录删除的数据索引
+      dialogForm: { // 编辑分类数据框
+        id: '',
+        name: '',
+        synopsis: ''
+      },
+      dataIndex: ''
     }
   },
   methods: {
@@ -253,7 +175,27 @@ export default {
     },
     handleClose (done) {
       done()
+    },
+    bianji (index, data) {
+      this.dataIndex = index
+      this.dialogForm.id = data.categoryId
+      this.dialogForm.name = data.categoryName
+      this.dialogForm.synopsis = data.synopsis
+      this.dialogFormVisible = true
+    },
+    updata () {
+      this.tabdata[this.dataIndex].categoryName = this.dialogForm.name
+      this.tabdata[this.dataIndex].synopsis = this.dialogForm.synopsis
+      this.dialogFormVisible = false
     }
+  },
+  mounted: function () {
+    this.$axios.post('http://118.89.40.213/eolinker/server/index.php?g=Web&c=Mock&o=simple&projectID=6&uri=Asudden/currency/goods/categoryList').then(
+      (response) => {
+        this.tabdata = response.data
+        console.log(this.tabdata)
+      }
+    )
   }
 
 }

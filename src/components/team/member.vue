@@ -12,12 +12,12 @@
     <el-col :span="15">
       <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
         <el-col :span="7">
-          <el-form-item label="产品名称">
+          <el-form-item label="成员名称">
           <el-input prefix-icon="el-icon-search" v-model="formLabelAlign.name"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="14">
-          <el-form-item label="创建产品时间" label-width="110px">
+          <el-form-item label="创建成员时间" label-width="110px">
             <el-col :span="11">
               <el-date-picker type="date" placeholder="选择日期" v-model="formLabelAlign.date1" style="width: 100%;"></el-date-picker>
             </el-col>
@@ -33,60 +33,25 @@
       </el-form>
     </el-col>
     <el-col :span="2" :offset="7" style="padding-right:20px;">
-      <el-button type="primary" plain>新增产品</el-button>
+      <el-button type="primary" plain>新增成员</el-button>
     </el-col>
   </el-row>
   <!-- 分类列表表单 -->
   <el-table
     :data="tableData5"
     style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="产品编号">
-            <span>{{ props.row.name }}</span>
-          </el-form-item>
-          <el-form-item label="产品名称">
-            <span>{{ props.row.id }}</span>
-          </el-form-item>
-          <el-form-item label="产品状态">
-            <span>{{ props.row.shopId }}</span>
-          </el-form-item>
-          <el-form-item label="产品价格">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-          <el-form-item label="产品销量">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-          <el-form-item label="产品描述">
-            <span>{{ props.row.desc }}</span>
-          </el-form-item>
-          <el-form-item label="创建时间">
-            <span>{{ props.row.desc }}</span>
-          </el-form-item>
-          <el-form-item label="修改时间">
-            <span>{{ props.row.desc }}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
     <el-table-column
-      label="产品编号"
+      label="成员编号"
       prop="id"
       align="center">
     </el-table-column>
     <el-table-column
-      label="产品名称"
+      label="成员名称"
       prop="name"
       align="center">
     </el-table-column>
     <el-table-column
-      label="产品价格"
-      prop="shopId"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      label="产品描述"
+      label="成员描述"
       prop="desc"
       align="center">
     </el-table-column>
@@ -96,7 +61,7 @@
       align="center">
     </el-table-column>
     <el-table-column
-      label="所属分类"
+      label="成员权限"
       prop="desc"
       align="center">
     </el-table-column>
@@ -108,14 +73,6 @@
         <el-button
           size="mini"
           @click="dialogFormVisible = true">详情</el-button>
-        <el-button
-          size="mini"
-          type="Success"
-          @click="addFood(scope.$index, scope.row)" v-if="isshow">上架</el-button>
-          <el-button
-          size="mini"
-          type="Success"
-          @click="addFood(scope.$index, scope.row)">下架</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -135,11 +92,11 @@
   </div>
   <!-- 编辑分类 -->
 
-  <el-dialog title="编辑产品" :visible.sync="dialogFormVisible">
+  <el-dialog title="成员详情" :visible.sync="dialogFormVisible">
     <el-form :model="form">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="产品名称" :label-width="formLabelWidth">
+          <el-form-item label="成员名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
         </el-col>
