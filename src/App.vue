@@ -15,15 +15,15 @@
 </template>
 
 <script>
-import mainMenu from '@/components/menu/mainMenu'
-import headers from '@/components/layout/header'
+import mainMenu from '@/components/menu/mainMenu';
+import headers from '@/components/layout/header';
 export default {
   name: 'App',
   components: {
     mainMenu,
     headers
   }
-}
+};
 </script>
 
 <style>

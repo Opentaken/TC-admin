@@ -232,18 +232,18 @@ export default {
       activeName: 'all',
       isshow: false,
       checked: false
-    }
+    };
   },
   methods: {
     addFood: function (a, b) { // 表格---查看商品对应方法
-      console.log(a)
-      console.log(b)
+      console.log(a);
+      console.log(b);
     },
     handleCurrentChange (val) { // 分页切换页码触发的方法
-      console.log(`当前页: ${val}`)
+      console.log(`当前页: ${val}`);
     },
     test11 (targetName) {
-      console.log(targetName)
+      console.log(targetName);
     }
   }
 

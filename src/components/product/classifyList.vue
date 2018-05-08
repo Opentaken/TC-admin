@@ -156,49 +156,48 @@ export default {
         synopsis: ''
       },
       dataIndex: ''
-    }
+    };
   },
   methods: {
     check: function (val, classify) { // 表格---查看商品对应方法
-      this.$router.push({name: 'productList', params: {billId: classify}})
+      this.$router.push({name: 'productList', params: {billId: classify}});
     },
     delet: function (val) { // 点击删除触发按钮显示并记录数据索引值
-      this.deleIndex = val
-      this.dialogVisible = true
+      this.deleIndex = val;
+      this.dialogVisible = true;
     },
     deleteEnt: function () { // 点击确定触发的方法
-      this.tableData5.splice(this.deleIndex, 1)
-      this.dialogVisible = false
+      this.tableData5.splice(this.deleIndex, 1);
+      this.dialogVisible = false;
     },
     handleCurrentChange (val) { // 分页切换页码触发的方法
-      console.log(`当前页: ${val}`)
+      console.log(`当前页: ${val}`);
     },
     handleClose (done) {
-      done()
+      done();
     },
     bianji (index, data) {
-      this.dataIndex = index
-      this.dialogForm.id = data.categoryId
-      this.dialogForm.name = data.categoryName
-      this.dialogForm.synopsis = data.synopsis
-      this.dialogFormVisible = true
+      this.dataIndex = index;
+      this.dialogForm.id = data.categoryId;
+      this.dialogForm.name = data.categoryName;
+      this.dialogForm.synopsis = data.synopsis;
+      this.dialogFormVisible = true;
     },
     updata () {
-      this.tabdata[this.dataIndex].categoryName = this.dialogForm.name
-      this.tabdata[this.dataIndex].synopsis = this.dialogForm.synopsis
-      this.dialogFormVisible = false
+      this.tabdata[this.dataIndex].categoryName = this.dialogForm.name;
+      this.tabdata[this.dataIndex].synopsis = this.dialogForm.synopsis;
+      this.dialogFormVisible = false;
     }
   },
   mounted: function () {
     this.$axios.post('http://118.89.40.213/eolinker/server/index.php?g=Web&c=Mock&o=simple&projectID=6&uri=Asudden/currency/goods/categoryList').then(
       (response) => {
-        this.tabdata = response.data
-        console.log(this.tabdata)
+        this.tabdata = response.data;
+        console.log(this.tabdata);
       }
-    )
+    );
   }
-
-}
+};
 </script>
 
 <style lang='less' scoped>

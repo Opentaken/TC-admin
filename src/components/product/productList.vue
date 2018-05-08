@@ -33,7 +33,7 @@
       </el-form>
     </el-col>
     <el-col :span="2" :offset="7" style="padding-right:20px;">
-      <el-button type="primary" plain>新增产品</el-button>
+      <el-button type="primary" @click="addPro" plain>新增产品</el-button>
     </el-col>
   </el-row>
   <!-- 分类列表表单 -->
@@ -157,7 +157,6 @@
           <el-checkbox v-model="checked" class="check_center" label="产品存量丰富随时有货保持一直有货，一直显示9999"></el-checkbox>
         </el-col>
       </el-row>
-      
       <el-form-item label="所属分类" :label-width="formLabelWidth">
         <el-input v-model="form.region" auto-complete="off"></el-input>
       </el-form-item>
@@ -275,22 +274,24 @@ export default {
       activeName: 'all',
       isshow: false,
       checked: false
-    }
+    };
   },
   methods: {
     addFood: function (a, b) { // 表格---查看商品对应方法
-      console.log(a)
-      console.log(b)
+      console.log(a);
+      console.log(b);
     },
     handleCurrentChange (val) { // 分页切换页码触发的方法
-      console.log(`当前页: ${val}`)
+      console.log(`当前页: ${val}`);
     },
     test11 (targetName) {
-      console.log(targetName)
+      console.log(targetName);
+    },
+    addPro: () => {
+      this.$router.push({name: 'product'});
     }
   }
-
-}
+};
 </script>
 
 <style lang='less'>

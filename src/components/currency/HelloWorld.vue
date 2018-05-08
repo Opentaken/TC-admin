@@ -97,7 +97,7 @@ export default {
         name: '分类名称',
         desc: '分类描述'
       }
-    }
+    };
   },
   components: {
     test222

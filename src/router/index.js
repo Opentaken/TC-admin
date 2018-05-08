@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Classify from '@/components/product/classifyList'
-import ProductList from '@/components/product/productList'
-import orderList from '@/components/order/orderList'
+import Vue from 'vue';
+import Router from 'vue-router';
+import HelloWorld from '@/components/HelloWorld';
+import Classify from '@/components/product/classifyList';
+import ProductList from '@/components/product/productList';
+import orderList from '@/components/order/orderList';
+import product from '@/components/product/product';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -28,6 +29,11 @@ export default new Router({
       path: '/orderList',
       name: 'orderList',
       component: orderList
+    },
+    {
+      path: '/product',
+      name: 'product',
+      component: product
     }
   ]
-})
+});
