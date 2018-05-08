@@ -46,7 +46,7 @@
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -84,5 +84,8 @@ export default {
 </script>
 
 <style lang='less'>
-
+.product{
+  padding: 20px 40px;
+  width: 400px;
+}
 </style>

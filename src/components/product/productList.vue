@@ -287,7 +287,8 @@ export default {
     test11 (targetName) {
       console.log(targetName);
     },
-    addPro: () => {
+    addPro: function () {
+      console.log('----');
       this.$router.push({name: 'product'});
     }
   }
