@@ -1,7 +1,10 @@
 <template>
   <div class="heads">
     <el-row>
-      <el-col :span='5' :offset="19">
+      <el-col class="header_title" :span='3'>
+        商品详情
+      </el-col>
+      <el-col :span='5' :offset="16">
         <el-col class="user_top" :span='4' :offset="8" v-popover:notice><i class="el-icon-bell"><sup>1</sup></i></el-col>
         <el-col class="user_top" :span='11' v-popover:user_handle><span class="user_bn">recall</span></el-col>
       </el-col>
@@ -83,6 +86,11 @@ export default {
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
   box-sizing:border-box;
   line-height: 28px;
+}
+.header_title{
+  line-height: 50px;
+  font-weight: 600;
+  font-size: 20px;
 }
 .user_top{
   height: 50px;

@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="form" :model="form" label-width="80px" align="left">
       <el-form-item label="商品名称">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
@@ -47,7 +47,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="back">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -78,6 +78,9 @@ export default {
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    back () {
+      this.$router.go(-1)
     }
   }
 };
@@ -86,6 +89,6 @@ export default {
 <style lang='less'>
 .product{
   padding: 20px 40px;
-  width: 400px;
+  width: 700px;
 }
 </style>
