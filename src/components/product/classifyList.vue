@@ -106,9 +106,20 @@
 
   <!-- 编辑分类 -->
   <el-dialog title="编辑分类" :visible.sync="dialogFormVisible">
-    <el-form :model="dialogForm">
+    <el-form :model="dialogForm" align="left">
       <el-form-item label="分类名称" :label-width="formLabelWidth">
         <el-input v-model="dialogForm.name" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="分类描述" :label-width="formLabelWidth">
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
       <el-form-item label="分类描述" :label-width="formLabelWidth">
         <el-input v-model="dialogForm.synopsis" auto-complete="off"></el-input>
@@ -155,7 +166,8 @@ export default {
         name: '',
         synopsis: ''
       },
-      dataIndex: ''
+      dataIndex: '',
+      imageUrl: '' //上传的图片链接
     };
   },
   methods: {
@@ -187,7 +199,22 @@ export default {
       this.tabdata[this.dataIndex].categoryName = this.dialogForm.name;
       this.tabdata[this.dataIndex].synopsis = this.dialogForm.synopsis;
       this.dialogFormVisible = false;
-    }
+    },
+    handleAvatarSuccess(res, file) { //上传的方法
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
   },
   mounted: function () {
     this.$axios.post('http://118.89.40.213/eolinker/server/index.php?g=Web&c=Mock&o=simple&projectID=6&uri=Asudden/currency/goods/categoryList').then(
@@ -200,7 +227,7 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
+<style lang='less'>
 .demo-table-expand{
   width: 75%;
   padding-left: 20%;
@@ -216,5 +243,28 @@ export default {
 .block{
   float: right;
   margin: 10px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
