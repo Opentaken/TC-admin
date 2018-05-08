@@ -79,7 +79,7 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    back () {
+    back () { //取消按钮的方法
       this.$router.go(-1)
     }
   }

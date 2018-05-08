@@ -287,7 +287,7 @@ export default {
     test11 (targetName) {
       console.log(targetName);
     },
-    addPro: function () {
+    addPro: function () { //新增产品的方法--->跳转产品详情页面
       console.log('----');
       this.$router.push({name: 'product'});
     }
