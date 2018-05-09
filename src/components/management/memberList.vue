@@ -1,5 +1,5 @@
 <template>
-<div class="orderList">
+<div class="memberList">
   <!-- 查询模块 -->
   <el-row>
     <el-col :span="15">
@@ -25,16 +25,18 @@
         </el-col>
       </el-form>
     </el-col>
+    <el-col :span="2" :offset="7" style="padding-right:20px;">
+      <el-button type="primary" @click="addPro" plain>新增成员</el-button>
+    </el-col>
   </el-row>
 
   <!-- tabel标签 -->
   <el-tabs @tab-click="test11" v-model="activeName">
     <el-tab-pane label="全部" name="all"></el-tab-pane>
-    <el-tab-pane label="待支付" name="second"></el-tab-pane>
-    <el-tab-pane label="未发货" name="third"></el-tab-pane>
-    <el-tab-pane label="已发货" name="fourth"></el-tab-pane>
-    <el-tab-pane label="已取消" name="third"></el-tab-pane>
-    <el-tab-pane label="已完成" name="fourth"></el-tab-pane>
+    <el-tab-pane label="正常" name="second"></el-tab-pane>
+    <el-tab-pane label="未审核" name="third"></el-tab-pane>
+    <el-tab-pane label="资料错误" name="fourth"></el-tab-pane>
+    <el-tab-pane label="不允许通过" name="third"></el-tab-pane>
   </el-tabs>
 
   <!-- 分类列表表单 -->
@@ -47,43 +49,38 @@
       align="center">
     </el-table-column>
     <el-table-column
-      label="订单号"
+      label="账号"
       prop="id"
       align="center">
     </el-table-column>
     <el-table-column
-      label="订单商品"
+      label="账号名"
       prop="name"
       align="center">
     </el-table-column>
     <el-table-column
-      label="订单价格"
+      label="员工编号"
       prop="qw"
       align="center">
     </el-table-column>
     <el-table-column
-      label="客户名称"
+      label="员工名称"
       prop="wq"
       align="center">
     </el-table-column>
     <el-table-column
-      label="联系方式"
+      label="所属角色"
       prop="qwe"
       align="center">
     </el-table-column>
     <el-table-column
-      label="备注"
+      label="账号状态"
       prop="ewq"
       align="center">
     </el-table-column>
     <el-table-column
-      label="下单时间"
+      label="创建时间"
       prop="qew"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      label="订单状态"
-      prop="eqw"
       align="center">
     </el-table-column>
     <el-table-column
@@ -93,15 +90,19 @@
       <template slot-scope="scope">
         <el-button
         size="mini"
-        @click="deliver_goods(scope.$index, scope.row)">发货</el-button>
+        @click="details">详情</el-button>
         <el-button
           size="mini"
           type="primary"
-          @click="details">详情</el-button>
+          @click="details">禁用</el-button>
+          <el-button
+          size="mini"
+          type="primary"
+          @click="details">启用</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="cancel_order(scope.$index, scope.row)">取消</el-button>
+          @click="delete_member(scope.$index, scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -117,38 +118,7 @@
     </el-pagination>
   </div>
 
-  <!-- 发货 -->
-  <el-dialog title="发货" :visible.sync="deliverGoods">
-    <el-form :model="form" align="center">
-      <el-row>
-        <el-col :span="12" :offset="5">
-          <el-form-item label="快递公司：" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
-        </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12" :offset="5">
-          <el-form-item label="快递单号：" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
-        </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12" :offset="5">
-          <el-form-item label="备注：" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
-        </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="deliverGoods = false">取 消</el-button>
-      <el-button type="primary" @click="deliverGoods = false">确 定</el-button>
-    </div>
-  </el-dialog>
-
-    <!-- 取消订单 -->
+  <!-- 取消订单 -->
   <el-dialog title="取消订单" :visible.sync="cancelOrder">
     <el-form :model="form">
       <el-col :span="22">
@@ -295,21 +265,18 @@ export default {
     handleCurrentChange (val) { // 分页切换页码触发的方法
       console.log(`当前页: ${val}`);
     },
-    test11 (targetName) { // tabs回调方法
+    test11 (targetName) {
       console.log(targetName);
     },
     addPro: function () { // 新增产品的方法--->跳转产品详情页面
       console.log('----');
       this.$router.push({name: 'product'});
     },
-    deliver_goods: function () { // 发货方法
-      this.deliverGoods = true;
-    },
-    cancel_order: function () { // 取消订单方法
+    delete_member: function () { // 删除成员
       this.cancelOrder = true;
     },
     details: function () { //详情跳转方法
-      this.$router.push({name: 'order'});
+      this.$router.push({name: 'member'});
     }
   }
 };

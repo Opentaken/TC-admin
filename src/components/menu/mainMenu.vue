@@ -24,7 +24,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">订单管理</span>
       </el-menu-item>
-      <el-menu-item index="4" route="/test">
+      <el-menu-item index="4" route="/memberList">
         <i class="el-icon-document"></i>
         <span slot="title">成员管理</span>
       </el-menu-item>
