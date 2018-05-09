@@ -167,7 +167,7 @@ export default {
         synopsis: ''
       },
       dataIndex: '',
-      imageUrl: '' //上传的图片链接
+      imageUrl: '' // 上传的图片链接
     };
   },
   methods: {
@@ -199,22 +199,7 @@ export default {
       this.tabdata[this.dataIndex].categoryName = this.dialogForm.name;
       this.tabdata[this.dataIndex].synopsis = this.dialogForm.synopsis;
       this.dialogFormVisible = false;
-    },
-    handleAvatarSuccess(res, file) { //上传的方法
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
+    }
   },
   mounted: function () {
     this.$axios.post('http://118.89.40.213/eolinker/server/index.php?g=Web&c=Mock&o=simple&projectID=6&uri=Asudden/currency/goods/categoryList').then(
