@@ -5,6 +5,7 @@ import Classify from '@/components/product/classifyList';
 import ProductList from '@/components/product/productList';
 import orderList from '@/components/order/orderList';
 import product from '@/components/product/product';
+import order from '@/components/order/order';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/product',
       name: 'product',
       component: product
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order
     }
   ]
 });

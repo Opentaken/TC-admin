@@ -1,12 +1,5 @@
 <template>
-<div class="classfy">
-  <!-- tabel标签 -->
-  <el-tabs @tab-click="test11" v-model="activeName">
-    <el-tab-pane label="全部" name="all"></el-tab-pane>
-    <el-tab-pane label="出售中" name="second"></el-tab-pane>
-    <el-tab-pane label="已售完" name="third"></el-tab-pane>
-    <el-tab-pane label="未上架" name="fourth"></el-tab-pane>
-  </el-tabs>
+<div class="orderList">
   <!-- 查询模块 -->
   <el-row>
     <el-col :span="15">
@@ -33,68 +26,85 @@
       </el-form>
     </el-col>
     <el-col :span="2" :offset="7" style="padding-right:20px;">
-      <el-button type="primary" plain>新增产品</el-button>
+      <el-button type="primary" @click="addPro" plain>新增产品</el-button>
     </el-col>
   </el-row>
+
+  <!-- tabel标签 -->
+  <el-tabs @tab-click="test11" v-model="activeName">
+    <el-tab-pane label="全部" name="all"></el-tab-pane>
+    <el-tab-pane label="待支付" name="second"></el-tab-pane>
+    <el-tab-pane label="未发货" name="third"></el-tab-pane>
+    <el-tab-pane label="已发货" name="fourth"></el-tab-pane>
+    <el-tab-pane label="已取消" name="third"></el-tab-pane>
+    <el-tab-pane label="已完成" name="fourth"></el-tab-pane>
+  </el-tabs>
+
   <!-- 分类列表表单 -->
   <el-table
     :data="tableData5"
     style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="分类名称">
-            <span>{{ props.row.name }}</span>
-          </el-form-item>
-          <el-form-item label="分类 ID">
-            <span>{{ props.row.id }}</span>
-          </el-form-item>
-          <el-form-item label="分类产品">
-            <span>{{ props.row.shopId }}</span>
-          </el-form-item>
-          <el-form-item label="产品销量">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-          <el-form-item label="分类描述">
-            <span>{{ props.row.desc }}</span>
-          </el-form-item>
-        </el-form>
-      </template>
+    <el-table-column
+      type="index"
+      width="50"
+      align="center">
     </el-table-column>
     <el-table-column
-      label="分类 ID"
+      label="订单号"
       prop="id"
-      align="center"
-      width="260">
+      align="center">
     </el-table-column>
     <el-table-column
-      label="分类名称"
+      label="订单商品"
       prop="name"
-      align="center"
-      width="260">
+      align="center">
     </el-table-column>
     <el-table-column
-      label="分类描述"
-      prop="desc"
-      align="center"
-      width="350">
+      label="订单价格"
+      prop="qw"
+      align="center">
     </el-table-column>
-    <el-table-column width="100"></el-table-column>
+    <el-table-column
+      label="客户名称"
+      prop="wq"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="联系方式"
+      prop="qwe"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="备注"
+      prop="ewq"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="下单时间"
+      prop="qew"
+      align="center">
+    </el-table-column>
+    <el-table-column
+      label="订单状态"
+      prop="eqw"
+      align="center">
+    </el-table-column>
     <el-table-column
       label="操作"
-      align="center">
+      align="center"
+      width="290">
       <template slot-scope="scope">
         <el-button
-          size="mini"
-          @click="dialogFormVisible = true">编辑</el-button>
+        size="mini"
+        @click="deliver_goods(scope.$index, scope.row)">发货</el-button>
         <el-button
           size="mini"
-          type="Success"
-          @click="addFood(scope.$index, scope.row)">查看所属商品</el-button>
+          type="primary"
+          @click="details">详情</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="cancel_order(scope.$index, scope.row)">取消</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -109,20 +119,50 @@
       :total="100">
     </el-pagination>
   </div>
-  <!-- 编辑分类 -->
 
-  <el-dialog title="编辑分类" :visible.sync="dialogFormVisible">
-    <el-form :model="form">
-      <el-form-item label="分类名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="分类描述" :label-width="formLabelWidth">
-        <el-input v-model="form.region" auto-complete="off"></el-input>
-      </el-form-item>
+  <!-- 发货 -->
+  <el-dialog title="发货" :visible.sync="deliverGoods">
+    <el-form :model="form" align="center">
+      <el-row>
+        <el-col :span="12" :offset="5">
+          <el-form-item label="快递公司：" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12" :offset="5">
+          <el-form-item label="快递单号：" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12" :offset="5">
+          <el-form-item label="备注：" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      <el-button @click="deliverGoods = false">取 消</el-button>
+      <el-button type="primary" @click="deliverGoods = false">确 定</el-button>
+    </div>
+  </el-dialog>
+
+    <!-- 取消订单 -->
+  <el-dialog title="取消订单" :visible.sync="cancelOrder">
+    <el-form :model="form">
+      <el-col :span="22">
+        <el-form-item label="取消原因：" :label-width="formLabelWidth">
+          <el-input type="textarea" v-model="form.name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-col>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="cancelOrder = false">取 消</el-button>
+      <el-button type="primary" @click="cancelOrder = false">确 定</el-button>
     </div>
   </el-dialog>
 
@@ -136,89 +176,108 @@ export default {
       tableData5: [{// 表单数据
         id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987123',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      }, {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987125',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '12987126',
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
+      },
+      {// 表单数据
+        id: '12987122',
         name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
+        qw: '300.00',
+        wq: '某先生',
+        qwe: '13456789012',
+        ewq: '尼玛，赶紧发货哇',
+        qew: '2018-05-09',
+        eqw: '未发货'
       }],
       form: {// 表单操作--编辑数据
         name: '',
         region: ''
       },
-      dialogFormVisible: false, // 控制弹窗是否显示
+      deliverGoods: false, // 控制发货弹窗是否显示
+      cancelOrder: false, // 控制取消订单弹窗是否显示
       formLabelWidth: '120px', // 弹窗label宽度
       labelPosition: 'right', // 表单label对齐方式
       formLabelAlign: {// 查询框的数据
@@ -226,7 +285,9 @@ export default {
         date1: '',
         date2: ''
       },
-      activeName: 'all'
+      activeName: 'all',
+      isshow: false,
+      checked: false
     };
   },
   methods: {
@@ -239,6 +300,19 @@ export default {
     },
     test11 (targetName) {
       console.log(targetName);
+    },
+    addPro: function () { // 新增产品的方法--->跳转产品详情页面
+      console.log('----');
+      this.$router.push({name: 'product'});
+    },
+    deliver_goods: function () {
+      this.deliverGoods = true;
+    },
+    cancel_order: function () {
+      this.cancelOrder = true;
+    },
+    details: function () {
+      this.$router.push({name: 'order'});
     }
   }
 };
@@ -262,9 +336,12 @@ export default {
   margin: 10px;
 }
 .el-tabs{
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 .el-tabs__nav-scroll{
   padding-left: 20px;
+}
+.check_center{
+  vertical-align: -webkit-baseline-middle;
 }
 </style>

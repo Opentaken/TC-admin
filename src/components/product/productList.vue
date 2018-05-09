@@ -1,12 +1,5 @@
 <template>
 <div class="classfy">
-  <!-- tabel标签 -->
-  <el-tabs @tab-click="test11" v-model="activeName">
-    <el-tab-pane label="全部" name="all"></el-tab-pane>
-    <el-tab-pane label="出售中" name="second"></el-tab-pane>
-    <el-tab-pane label="已售完" name="third"></el-tab-pane>
-    <el-tab-pane label="未上架" name="fourth"></el-tab-pane>
-  </el-tabs>
   <!-- 查询模块 -->
   <el-row>
     <el-col :span="15">
@@ -36,6 +29,13 @@
       <el-button type="primary" @click="addPro" plain>新增产品</el-button>
     </el-col>
   </el-row>
+  <!-- tabel标签 -->
+  <el-tabs @tab-click="test11" v-model="activeName">
+    <el-tab-pane label="全部" name="all"></el-tab-pane>
+    <el-tab-pane label="出售中" name="second"></el-tab-pane>
+    <el-tab-pane label="已售完" name="third"></el-tab-pane>
+    <el-tab-pane label="未上架" name="fourth"></el-tab-pane>
+  </el-tabs>
   <!-- 分类列表表单 -->
   <el-table
     :data="tableData5"
@@ -313,7 +313,7 @@ export default {
   margin: 10px;
 }
 .el-tabs{
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 .el-tabs__nav-scroll{
   padding-left: 20px;
