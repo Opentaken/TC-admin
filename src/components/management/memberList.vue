@@ -275,7 +275,7 @@ export default {
     delete_member: function () { // 删除成员
       this.cancelOrder = true;
     },
-    details: function () { //详情跳转方法
+    details: function () { // 详情跳转方法
       this.$router.push({name: 'member'});
     }
   }

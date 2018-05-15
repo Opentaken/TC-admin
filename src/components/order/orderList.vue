@@ -308,7 +308,7 @@ export default {
     cancel_order: function () { // 取消订单方法
       this.cancelOrder = true;
     },
-    details: function () { //详情跳转方法
+    details: function () { // 详情跳转方法
       this.$router.push({name: 'order'});
     }
   }

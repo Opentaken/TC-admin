@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
+import index from '@/components/index';
 import Classify from '@/components/product/classifyList';
 import ProductList from '@/components/product/productList';
 import orderList from '@/components/order/orderList';
@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: HelloWorld
+      component: index
     },
     {
       path: '/classifyList',
