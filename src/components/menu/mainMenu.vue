@@ -24,13 +24,20 @@
         <i class="el-icon-menu"></i>
         <span slot="title">订单管理</span>
       </el-menu-item>
-      <el-menu-item index="4" route="/memberList">
-        <i class="el-icon-document"></i>
-        <span slot="title">成员管理</span>
-      </el-menu-item>
-      <el-menu-item index="5">
-        <i class="el-icon-setting"></i>
-        <span slot="title">客户管理</span>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>系统管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="4-1" route="roleList">角色管理</el-menu-item>
+          <el-menu-item index="4-2" route="memberList">成员管理</el-menu-item>
+          <el-menu-item index="4-2" route="memberList">会员管理</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-menu-item index='5' route="/wenz">
+        <i class="el-icon-menu"></i>
+        <span slot="title">文章</span>
       </el-menu-item>
     </el-menu>
 </template>

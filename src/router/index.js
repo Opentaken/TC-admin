@@ -7,7 +7,8 @@ import orderList from '@/components/order/orderList';
 import product from '@/components/product/product';
 import order from '@/components/order/order';
 import memberList from '@/components/management/memberList';
-import member from '@/components/management/member';
+import roleList from '@/components/management/roleList';
+import wenz from '@/components/product/wenz';
 
 Vue.use(Router);
 
@@ -49,9 +50,14 @@ export default new Router({
       component: memberList
     },
     {
-      path: '/member',
-      name: 'member',
-      component: member
+      path: '/roleList',
+      name: 'roleList',
+      component: roleList
+    },
+    {
+      path: '/wenz',
+      name: 'wenz',
+      component: wenz
     }
   ]
 });

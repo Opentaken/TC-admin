@@ -50,10 +50,12 @@
         <el-button @click="back">取消</el-button>
       </el-form-item>
     </el-form>
+    <wenz></wenz>
   </div>
 </template>
 
 <script>
+import wenz from './wenz';
 export default {
   data () {
     return {
@@ -70,6 +72,9 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false
     };
+  },
+  components: {
+    wenz
   },
   methods: {
     handleRemove (file, fileList) {
