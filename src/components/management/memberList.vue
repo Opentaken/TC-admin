@@ -322,7 +322,9 @@ export default {
     delete_member: function () { // 删除成员
       this.cancelOrder = true;
     },
-      this.$router.push({name: 'member'});    }
+    detauks: function () {
+      this.$router.push({name: 'member'});
+    } 
   }
 };
 </script>

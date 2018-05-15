@@ -1,11 +1,12 @@
 <template>
     <el-menu
-      default-active="1"
+      :default-active="activeIndex"
       class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      :router='true'>
+      :router='true'
+      @select="active_index">
       <el-menu-item index="1" route='/'>
         <i class="el-icon-menu"></i>
         <span slot="title">首页</span>
@@ -47,8 +48,16 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      activeIndex: '1'
     };
+  },
+  methods: {
+    active_index: function (index) {
+      this.activeIndex = index;
+    }
+  },
+  mounted () {
+    console.log(this.activeIndex);
   }
 };
 </script>
