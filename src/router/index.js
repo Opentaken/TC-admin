@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
+import index from '@/components/index';
 import Classify from '@/components/product/classifyList';
 import ProductList from '@/components/product/productList';
 import orderList from '@/components/order/orderList';
 import product from '@/components/product/product';
 import order from '@/components/order/order';
 import memberList from '@/components/management/memberList';
-import member from '@/components/management/member';
+import roleList from '@/components/management/roleList';
+import wenz from '@/components/product/wenz';
 
 Vue.use(Router);
 
@@ -16,7 +17,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: HelloWorld
+      component: index
     },
     {
       path: '/classifyList',
@@ -49,9 +50,14 @@ export default new Router({
       component: memberList
     },
     {
-      path: '/member',
-      name: 'member',
-      component: member
+      path: '/roleList',
+      name: 'roleList',
+      component: roleList
+    },
+    {
+      path: '/wenz',
+      name: 'wenz',
+      component: wenz
     }
   ]
 });

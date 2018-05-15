@@ -26,20 +26,18 @@
       </el-form>
     </el-col>
     <el-col :span="2" :offset="7" style="padding-right:20px;">
-      <el-button type="primary" @click="addPro" plain>新增成员</el-button>
+      <el-button type="primary" @click="addPro" plain>新增角色</el-button>
     </el-col>
   </el-row>
 
   <!-- tabel标签 -->
   <el-tabs @tab-click="test11" v-model="activeName">
     <el-tab-pane label="全部" name="all"></el-tab-pane>
-    <el-tab-pane label="正常" name="second"></el-tab-pane>
-    <el-tab-pane label="未审核" name="third"></el-tab-pane>
-    <el-tab-pane label="资料错误" name="fourth"></el-tab-pane>
-    <el-tab-pane label="不允许通过" name="third"></el-tab-pane>
+    <el-tab-pane label="启用" name="second"></el-tab-pane>
+    <el-tab-pane label="禁用" name="third"></el-tab-pane>
   </el-tabs>
 
-  <!-- 分类列表表单 -->
+  <!-- 角色列表表单 -->
   <el-table
     :data="tableData5"
     style="width: 100%">
@@ -49,32 +47,17 @@
       align="center">
     </el-table-column>
     <el-table-column
-      label="账号"
+      label="角色名称"
       prop="id"
       align="center">
     </el-table-column>
     <el-table-column
-      label="账号名"
-      prop="name"
+      label="角色描述"
+      prop="id"
       align="center">
     </el-table-column>
     <el-table-column
-      label="员工编号"
-      prop="qw"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      label="员工名称"
-      prop="wq"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      label="所属角色"
-      prop="qwe"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      label="账号状态"
+      label="角色状态"
       prop="ewq"
       align="center">
     </el-table-column>
@@ -118,30 +101,17 @@
     </el-pagination>
   </div>
 
-  <!-- 添加/修改成员信息 -->
-  <el-dialog title="成员信息" :visible.sync="memberDialog">
+  <!-- 添加/修改角色信息 -->
+  <el-dialog title="角色信息" :visible.sync="roleDialog">
     <el-form ref="member" :model="form" label-width="100px">
-      <el-form-item label="账号名称：">
-        <el-input v-model="member.userNama"></el-input>
+      <el-form-item label="角色名称：">
+        <el-input v-model="role.name"></el-input>
       </el-form-item>
-      <el-form-item label="账号：">
-        <el-input v-model="member.userId"></el-input>
+      <el-form-item label="角色描述：">
+        <el-input v-model="role.description"></el-input>
       </el-form-item>
-      <el-form-item label="密码：">
-        <el-input v-model="member.password"></el-input>
-      </el-form-item>
-      <el-form-item label="性别：" align="left">
-        <el-radio v-model="member.sex" label="1">备选项</el-radio>
-        <el-radio v-model="member.sex" label="2">备选项</el-radio>
-      </el-form-item>
-      <el-form-item label="员工工号：">
-        <el-input v-model="member.memberId"></el-input>
-      </el-form-item>
-      <el-form-item label="员工名称：">
-        <el-input v-model="member.memberName"></el-input>
-      </el-form-item>
-      <el-form-item label="用户权限：">
-        <el-checkbox-group v-model="member.role" align="left">
+      <el-form-item label="角色权限：">
+        <el-checkbox-group v-model="role.power" align="left">
           <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
           <el-checkbox label="地推活动" name="type"></el-checkbox>
           <el-checkbox label="线下主题活动" name="type"></el-checkbox>
@@ -150,11 +120,10 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="memberDialog = false">取 消</el-button>
-      <el-button type="primary" @click="memberDialog = false">确 定</el-button>
+      <el-button @click="roleDialog = false">取 消</el-button>
+      <el-button type="primary" @click="roleDialog = false">确 定</el-button>
     </div>
   </el-dialog>
-
 
   <!-- 取消订单 -->
   <el-dialog title="取消订单" :visible.sync="cancelOrder">
@@ -170,7 +139,6 @@
       <el-button type="primary" @click="cancelOrder = false">确 定</el-button>
     </div>
   </el-dialog>
-
 </div>
 </template>
 
@@ -281,7 +249,7 @@ export default {
         name: '',
         region: ''
       },
-      memberDialog: false, // 控制添加/修改成员信息弹窗是否显示
+      roleDialog: false, // 控制添加/修改角色信息弹窗是否显示
       cancelOrder: false, // 控制取消订单弹窗是否显示
       formLabelWidth: '120px', // 弹窗label宽度
       labelPosition: 'right', // 表单label对齐方式
@@ -293,22 +261,14 @@ export default {
       activeName: 'all',
       isshow: false,
       checked: false,
-      member: { // 添加/修改成员信息弹窗数据
-        userNama: '',
-        userId: '',
-        password: '',
-        sex: '',
-        memberId: '',
-        memberName: '',
-        role: ''
+      role: { // 添加/修改角色信息弹窗数据
+        nama: '', // 角色名
+        description: '', // 角色描述
+        power: '' // 角色权限
       }
     };
   },
   methods: {
-    addFood: function (a, b) { // 表格---查看商品对应方法
-      console.log(a);
-      console.log(b);
-    },
     handleCurrentChange (val) { // 分页切换页码触发的方法
       console.log(`当前页: ${val}`);
     },
@@ -323,7 +283,7 @@ export default {
       this.cancelOrder = true;
     },
     details: function () { // 详情跳转方法
-      this.memberDialog = true;
+      this.roleDialog = true;
     }
   }
 };
