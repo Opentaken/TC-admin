@@ -1,17 +1,13 @@
 <template>
  <div>
-     <quillEditor ref="myTextEditor"></quillEditor>
+     <quill-editor ref="myTextEditor"></quill-editor>
  </div>
 </template>
  
 <script>
-import { quillEditor } from 'vue-quill-editor'; // 调用编辑器
 export default {
   data () {
     return {};
-  },    
-  components: {
-    quillEditor
   }
 };  
 </script>
